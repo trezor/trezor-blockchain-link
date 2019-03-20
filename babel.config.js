@@ -1,9 +1,9 @@
-module.exports = (api) => {
+export default (api) => {
     api.cache(true);
 
     const presets = [
-        "@babel/typescript",
-        "@babel/env"
+        "@babel/env",
+        "@babel/typescript"
     ];
 
     const plugins = [

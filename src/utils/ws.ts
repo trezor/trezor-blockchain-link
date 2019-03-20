@@ -1,8 +1,8 @@
 /**
- * Copy/paste from /node_modules/ripple-lib/dist/npm/common/wswrapper.js
- * Provides `EventEmitter` interface for native browser `WebSocket`,
- * same, as `ws` package provides.
- */
+    * Copy/paste from /node_modules/ripple-lib/dist/npm/common/wswrapper.js
+    * Provides `EventEmitter` interface for native browser `WebSocket`,
+    * same, as `ws` package provides.
+*/
 
 const events = require("events");
 
