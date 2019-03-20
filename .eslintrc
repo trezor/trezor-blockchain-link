@@ -1,9 +1,12 @@
 {
     "extends": [
-        "eslint:recommended",
-        "plugin:flowtype/recommended",
+        "airbnb-base",
+        "plugin:@typescript-eslint/recommended",
+        "prettier",
+        "prettier/@typescript-eslint",
         "plugin:mocha/recommended"
     ],
+    "parser": "typescript-eslint-parser",
     "globals": {
     },
     "env": {
@@ -30,12 +33,13 @@
     "plugins": [
         "import",
         "mocha",
-        "flowtype"
+        "flowtype",
+        "typescript"
     ],
     "settings": {
         "import/resolver": {
             "babel-module": {}
-          },
+        },
         "import/ignore": [
             "\\.(scss|less|css)$"
         ]
