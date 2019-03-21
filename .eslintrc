@@ -6,7 +6,7 @@
         "prettier/@typescript-eslint",
         "plugin:mocha/recommended"
     ],
-    "parser": "typescript-eslint-parser",
+    "parser": "@typescript-eslint/parser",
     "globals": {
     },
     "env": {

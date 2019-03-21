@@ -96,8 +96,9 @@ const connect = async () => {
     }
 
     common.debug('Connecting to', _endpoints[0]);
-    const api = new RippleAPI({ server: _endpoints[0] });
-   
+    const api = new RippleAPI({ server: _endpoints[0] 
+    });
+
     try {
         await api.connect();
     } catch (error) {

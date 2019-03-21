@@ -1,8 +1,5 @@
-/* @flow */
-
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-// import FlowWebpackPlugin from 'flow-webpack-plugin';
 
 import {
     SRC, BUILD, PORT,
@@ -15,7 +12,6 @@ module.exports = {
     entry: {
         indexUI: [`${SRC}/ui/index.ui.ts`],
         index: [`${SRC}/index.ts`],
-        // ripple: [`${SRC}/workers/ripple/index.ts`],
     },
     output: {
         filename: '[name].[hash].ts',
@@ -35,22 +31,14 @@ module.exports = {
         rules: [
             {
                 test: /\.ts?$/,
-                exclude: /node_modules/,
-                use: [
-                    'babel-loader',
-                    // {
-                    //     loader: 'eslint-loader',
-                    //     options: {
-                    //         emitWarning: true,
-                    //     },
-                    // },
-                ],
-            },
+                use: 'ts-loader',
+                exclude: /node_modules/
+            }
         ],
     },
     resolve: {
         modules: [SRC, 'node_modules'],
-        extensions: [".ts", '.js'],
+        extensions: [ '.tsx', '.ts', '.js' ],
         alias: {
             'ws-browser': `${SRC}/utils/ws.ts`,
         },

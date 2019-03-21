@@ -21,8 +21,8 @@ module.exports = {
         rules: [
             {
                 test: /\.ts?$/,
-                exclude: /node_modules/,
-                use: ['babel-loader']
+                use: 'ts-loader',
+                exclude: /node_modules/
             },
             {
                 type: 'javascript/auto',

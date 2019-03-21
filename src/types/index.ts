@@ -4,7 +4,6 @@ export type Deferred<T> = {
     resolve: (t: T) => void,
     reject: (e: Error) => void,
 }; 
-
 export interface BlockchainSettings {
     name: string,
     worker: string | Function,

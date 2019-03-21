@@ -3,6 +3,7 @@ import 'worker-loader?name=js/blockbook-worker.ts!../workers/blockbook/index';
 import 'worker-loader?name=js/ripple-worker.ts!../workers/ripple/index';
 
 import CONFIG from './config';
+console.log('CONFIG', CONFIG);
 import BlockchainLink from '../index';
 
 const handleClick = (event: MouseEvent) => {
