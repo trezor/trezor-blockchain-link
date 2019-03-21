@@ -52,7 +52,7 @@ module.exports = {
         modules: [SRC, 'node_modules'],
         extensions: [ '.ts', '.js' ],
         alias: {
-            'ws-browser': `${SRC}/utils/ws.ts`,
+            'ws-browser': `${SRC}/utils/ws`,
         },
     },
     performance: {

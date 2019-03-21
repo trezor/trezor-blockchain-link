@@ -33,7 +33,7 @@ export default [
     {
         blockchain: {
             name: 'Ripple Mainnet',
-            worker: 'js/ripple-worker.ts',
+            worker: 'ripple-worker',
             server: [
                 'wss://s1.ripple.com',
             ],
@@ -63,7 +63,7 @@ export default [
     {
         blockchain: {
             name: 'Ethereum Testnet',
-            worker: 'js/blockbook-worker.ts',
+            worker: 'blockbook-worker',
             // server: ['wss://blockbook-dev.corp:19136'],
             server: ['wss://blockbook-dev.corp.sldev.cz:19136'],
             // server: 'https://testnet-bitcore1.trezor.io',

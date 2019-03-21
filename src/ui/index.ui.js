@@ -1,6 +1,6 @@
 // Preload workers in webpack, force webpack to compile them
-import 'worker-loader?name=js/blockbook-worker.ts!../workers/blockbook/index';
-import 'worker-loader?name=js/ripple-worker.ts!../workers/ripple/index';
+import BlockbookWorker from 'worker-loader?name=blockbook-worker!../workers/blockbook/index.ts';
+import RippleWorker from 'worker-loader?name=ripple-worker!../workers/ripple/index.ts';
 
 import CONFIG from './config'; 
 import BlockchainLink from '../index';
