@@ -182,7 +182,7 @@ const subscribe = async (data: { id: number } & MessageTypes.Subscribe): Promise
     });
 }
 
-const subscribeAddresses = async (addresses: Array<string>) => {
+const subscribeAddresses = async (addresses: string[]) => {
     // subscribe to new blocks, confirmed and mempool transactions for given addresses
     const socket = await connect();
     if (!common.getSubscription('notification')) {
@@ -224,7 +224,7 @@ const unsubscribe = async (data: { id: number } & MessageTypes.Subscribe): Promi
     });
 }
 
-const unsubscribeAddresses = async (addresses: Array<string>) => {
+const unsubscribeAddresses = async (addresses: string[]) => {
     const subscribed = common.removeAddresses(addresses);
     const socket = await connect();
     await socket.unsubscribeAddresses(addresses);

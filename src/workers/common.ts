@@ -6,7 +6,7 @@ declare function postMessage(data: Response): void;
 
 let _settings: BlockchainSettings;
 let _debugPrefix: string;
-let _addresses: Array<string> = [];
+let _addresses: string[] = [];
 const _subscription: {[key: string]: boolean} = {};
 
 export const setSettings = (s: BlockchainSettings): void => {
@@ -18,7 +18,7 @@ export const getSettings = (): BlockchainSettings => {
     return _settings;
 }
 
-export const debug = (...args: Array<any>): void => {
+export const debug = (...args: any[]): void => {
     if (_settings && _settings.debug) {
         if (args[0] === 'warn' || args[0] === 'error') {
             console[args[0]](_debugPrefix, ...args.slice(1));
@@ -35,8 +35,8 @@ export const handshake = (): void => {
     });
 }
 
-export const errorHandler = ({ id, error }: { id: number, error: Object}): void => {
-    let message: string = '';
+export const errorHandler = ({ id, error }: { id: number, error: Record<string, any>}): void => {
+    let message = '';
     if (typeof error === 'string') {
         message = error;
     } else if (typeof error === 'object') {
@@ -59,7 +59,7 @@ export const response = (data: Response): void => {
     postMessage(data);
 };
 
-const getUniqueInput = (addresses: Array<string>): Array<string> => {
+const getUniqueInput = (addresses: string[]): string[] => {
     if (!Array.isArray(addresses)) return [];
     const seen = {};
     return addresses.filter(a => {
@@ -68,17 +68,17 @@ const getUniqueInput = (addresses: Array<string>): Array<string> => {
     });
 }
 
-export const addAddresses = (addresses: Array<string>): Array<string> => {
+export const addAddresses = (addresses: string[]): string[] => {
     const unique = getUniqueInput(addresses).filter(a => _addresses.indexOf(a) < 0);
     _addresses = _addresses.concat(unique);
     return unique;
 }
 
-export const getAddresses = (): Array<string> => {
+export const getAddresses = (): string[] => {
     return _addresses;
 }
 
-export const removeAddresses = (addresses: Array<string>): Array<string> => {
+export const removeAddresses = (addresses: string[]): string[] => {
     const unique = getUniqueInput(addresses);
     _addresses = _addresses.filter(a => unique.indexOf(a) < 0);
     return _addresses;

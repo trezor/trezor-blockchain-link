@@ -1,14 +1,14 @@
 /* @flow */
-
 import BigNumber from 'bignumber.js';
+import * as ResponseTypes from '../../types/responses';
 
-export const concatTransactions = (txs: Array<Transaction>, newTxs: Array<Transaction>): Array<Transaction> => {
+export const concatTransactions = (txs: ResponseTypes.Transaction[], newTxs: ResponseTypes.Transaction[]): ResponseTypes.Transaction[] => {
     if (newTxs.length < 1) return txs;
     const unique = newTxs.filter(tx => txs.indexOf(tx) < 0);
     return txs.concat(unique);
 };
 
-export const transformTransactionHistory = (descriptor: string, raw: any): Transaction => {
+export const transformTransactionHistory = (descriptor: string, raw: any): ResponseTypes.Transaction => {
     const { tx } = raw;
     
     if (tx.TransactionType !== 'Payment') {
@@ -17,7 +17,7 @@ export const transformTransactionHistory = (descriptor: string, raw: any): Trans
     }
 
     const type = tx.Account === descriptor ? 'send' : 'recv';
-    const hash = tx.hash;
+    const {hash} = tx;
     const amount = tx.Amount;
     const fee = tx.Fee;
     const total = new BigNumber(amount).plus(fee).toString();
@@ -44,7 +44,7 @@ export const transformTransactionEvent = (descriptor: string, event: any): Trans
     const tx = event.transaction;
     const isPayment = tx.TransactionType === 'Payment';
     const type = tx.Account === descriptor ? 'send' : 'recv';
-    const hash = tx.hash;
+    const {hash} = tx;
     const amount = tx.Amount;
     const fee = tx.Fee;
     const total = isPayment ? new BigNumber(amount).plus(fee).toString() : '0';

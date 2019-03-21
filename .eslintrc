@@ -16,6 +16,7 @@
         "mocha": true
     },
     "rules": {
+        "no-underscore-dangle": 0,
         "import/prefer-default-export": 0,
         "no-use-before-define": 0,
         "no-plusplus": 0,
@@ -39,10 +40,7 @@
     "settings": {
         "import/resolver": {
             "babel-module": {}
-        },
-        "import/ignore": [
-            "\\.(scss|less|css)$"
-        ]
+        }
     },
     "parserOptions": {
         "ecmaVersion": 7,

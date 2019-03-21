@@ -22,7 +22,7 @@ const create = async () => {
     
     const server = new Server({ port, noServer: true });
     
-    const close = server.close;
+    const {close} = server;
     server.close = function () {
         // if (mock.expectedRequests !== undefined) {
         //   const allRequestsMade = _.every(mock.expectedRequests, function (counter) {

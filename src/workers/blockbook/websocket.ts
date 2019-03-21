@@ -2,16 +2,22 @@ import WebSocket from 'ws';
 import EventEmitter from 'events';
 import Promise from 'es6-promise';
 
-type WsCallback = (result: Object) => void;
+type WsCallback = (result: Record<string, any>) => void;
 export default class Socket extends EventEmitter {
     _url: string;
+
     _ws;
+
     _state: number = 0;
 
     _messageID: number = 0;
+
     _pendingMessages: { [string] } = {};
+
     _subscriptions: { [string] } = {};
+
     _subscribeNewBlockId: string = '';
+
     _subscribeAddressesId: string = '';
 
     _send(method: string, params: {}, callback: WsCallback): string {
@@ -70,7 +76,7 @@ export default class Socket extends EventEmitter {
                 s(resp.data);
             }
             else {
-                console.log('unknown response ' + resp.id);
+                console.log(`unknown response ${  resp.id}`);
             }
         }
     }
@@ -181,7 +187,7 @@ export default class Socket extends EventEmitter {
         });
     }
 
-    subscribeAddresses(addresses: Array<string>): Promise {
+    subscribeAddresses(addresses: string[]): Promise {
         return new Promise((resolve) => {
             const method = 'subscribeAddresses';
             const params = {
@@ -197,7 +203,7 @@ export default class Socket extends EventEmitter {
         });
     }
 
-    unsubscribeAddresses(addresses: Array<string>): Promise {
+    unsubscribeAddresses(addresses: string[]): Promise {
         return new Promise((resolve) => {
             if (this._subscribeAddressesId) {
                 this._unsubscribe('unsubscribeAddresses', this._subscribeAddressesId, {}, result => {

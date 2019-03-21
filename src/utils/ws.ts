@@ -24,14 +24,17 @@ class WSWrapper extends events.EventEmitter {
             this.emit('message', message.data);
         };
     }
+
     close() {
         if (this.readyState === 1) {
             this._ws.close();
         }
     }
+
     send(message) {
         this._ws.send(message);
     }
+
     get readyState() {
         return this._ws.readyState;
     }

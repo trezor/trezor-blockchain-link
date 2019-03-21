@@ -40,9 +40,12 @@ const initWorker = async (settings: IndexTypes.BlockchainSettings): Promise<Work
 
 class BlockchainLink extends EventEmitter {
     settings: IndexTypes.BlockchainSettings;
+
     messageId: number = 0;
+
     worker: Worker;
-    deferred: Array<IndexTypes.Deferred<any>> = [];
+
+    deferred: IndexTypes.Deferred<any>[] = [];
 
     constructor(settings: IndexTypes.BlockchainSettings) {
         super();

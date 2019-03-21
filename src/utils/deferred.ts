@@ -10,7 +10,7 @@ export function create(id: number) {
     });
 
     return {
-        id: id,
+        id,
         resolve: localResolve,
         reject: localReject,
         promise,

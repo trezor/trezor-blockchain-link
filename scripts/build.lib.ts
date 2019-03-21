@@ -12,7 +12,7 @@ const lib = resolve(__dirname, '../build/lib');
 internal.forEach(file => {
     const libFile = file.replace(src, lib);
     fs.copySync(file, libFile);
-    fs.copySync(file, libFile + '.azaaaa');
+    fs.copySync(file, `${libFile  }.ts`);
 });
 
 delete packageJSON.devDependencies;

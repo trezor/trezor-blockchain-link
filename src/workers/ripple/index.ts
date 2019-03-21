@@ -67,7 +67,7 @@ const BLOCKS = {
     MIN: 0,
     MAX: 0,
 };
-const TX_LIMIT: number = 100;
+const TX_LIMIT = 100;
 
 const timeoutHandler = async () => {
     if (_api && _api.isConnected()) {
@@ -294,13 +294,13 @@ const getAccountInfo = async (data) => {
             limit: fetchAll ? TX_LIMIT : options.limit,
         }
 
-        let transactions: Array<ResponseTypes.Transaction> = [];
+        let transactions: ResponseTypes.Transaction[] = [];
         if (!fetchAll) {
             // get only one page
             transactions = await getRawTransactions(payload.descriptor, requestOptions);
         } else {
             // get all pages at once
-            let hasNextPage: boolean = true;
+            let hasNextPage = true;
             while (hasNextPage) {
                 const response = await getRawTransactions(payload.descriptor, requestOptions);
                 transactions = utils.concatTransactions(transactions, response);
@@ -385,7 +385,7 @@ const subscribe = async (data: { id: number } & MessageTypes.Subscribe): Promise
     });
 }
 
-const subscribeAddresses = async (addresses: Array<string>, mempool: boolean = true) => {
+const subscribeAddresses = async (addresses: string[], mempool: boolean = true) => {
     // subscribe to new blocks, confirmed and mempool transactions for given addresses
     const api = await connect();
     if (!common.getSubscription('transaction')) {
@@ -433,7 +433,7 @@ const unsubscribe = async (data: { id: number } & MessageTypes.Subscribe): Promi
     });
 }
 
-const unsubscribeAddresses = async (addresses: Array<string>) => {
+const unsubscribeAddresses = async (addresses: string[]) => {
     const subscribed = common.removeAddresses(addresses);
     const request = {
         // stream: ['transactions', 'transactions_proposed'],

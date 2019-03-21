@@ -3,7 +3,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 import {
     SRC, BUILD, PORT,
-} from './constants';
+} from 'webpack/constants';
 
 module.exports = {
     watch: true,

@@ -2,7 +2,7 @@ import path from 'path';
 
 export const ABSOLUTE_BASE: string = path.normalize(path.join(__dirname, '..'));
 
-const constants: Object = Object.freeze({
+const constants: Record<string, any> = Object.freeze({
     BUILD: path.join(ABSOLUTE_BASE, 'build/'),
     SRC: path.join(ABSOLUTE_BASE, 'src/'),
     PORT: 8089,

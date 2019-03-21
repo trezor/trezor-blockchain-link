@@ -3,11 +3,12 @@ import 'worker-loader?name=js/blockbook-worker.ts!../workers/blockbook/index';
 import 'worker-loader?name=js/ripple-worker.ts!../workers/ripple/index';
 
 import CONFIG from './config';
-console.log('CONFIG', CONFIG);
 import BlockchainLink from '../index';
 
+console.log('CONFIG', CONFIG);
+
 const handleClick = (event: MouseEvent) => {
-    const target: HTMLElement = (event.target);
+    const {target} = event;
     if (target.nodeName.toLowerCase() !== 'button') return;
     const network: string = getInputValue('network-type');
 
@@ -149,7 +150,7 @@ const onClear = () => {
 }
 
 const getInputValue = (id: string): string => {
-    const value: string = (document.getElementById(id)).value;
+    const {value} = document.getElementById(id);
     return value;
 }
 
@@ -159,7 +160,7 @@ const setInputValue = (id: string, value: string): void => {
 }
 
 const onSelectChange = (event) => {
-    const value = event.target.value;
+    const {value} = event.target;
     const b = CONFIG.find(i => i.blockchain.name === value);
     fillValues(b.data);
     onClear();
@@ -190,9 +191,9 @@ const init = (instances) => {
         if (i.selected) {
             fillValues(i.data);
             return `<option value="${b.name}" selected>${b.name}</option>`;
-        } else {
-            return `<option value="${b.name}">${b.name}</option>`;
-        }
+        } 
+        return `<option value="${b.name}">${b.name}</option>`;
+        
     });
     select.onchange = onSelectChange;
 
@@ -208,7 +209,7 @@ const init = (instances) => {
 
 init(CONFIG);
 
-const instances: Array<BlockchainLink> = [];
+const instances: BlockchainLink[] = [];
 CONFIG.forEach(i => {
     const b = new BlockchainLink(i.blockchain);
     b.on('connected', handleConnectionEvent.bind(this, b, true));

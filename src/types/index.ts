@@ -1,4 +1,4 @@
-export type Deferred<T> = {
+export interface Deferred<T> {
     id: number,
     promise: Promise<T>,
     resolve: (t: T) => void,
@@ -7,7 +7,7 @@ export type Deferred<T> = {
 export interface BlockchainSettings {
     name: string,
     worker: string | Function,
-    server: Array<string>,
+    server: string[],
     debug?: boolean,
 };
 
@@ -18,7 +18,7 @@ export interface BlockchainInfo {
 };
 
 export interface AccountInfo {
-    addresses: Array<string>,
+    addresses: string[],
     balance: string,
     availableBalance: string,
 };
