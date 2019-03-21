@@ -46,6 +46,7 @@ module.exports = {
     },
     resolve: {
         modules: [ SRC, 'node_modules' ],
+        extensions: [".ts", '.js'],
         alias: {
 
         }

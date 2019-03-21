@@ -168,7 +168,7 @@ class BlockchainLink extends EventEmitter {
         this.emit(notification.type, notification.payload);
     }
     
-    onError: (error: { message: ?string, lineno: number, filename: string }) => void = (error) => {
+    onError: (error: { message: string, lineno: number, filename: string }) => void = (error) => {
         const message = error.message ? `Worker runtime error: Line ${error.lineno} in ${error.filename}: ${error.message}` : 'Worker handshake error';
         const e = new Error(message);
         // reject all pending responses

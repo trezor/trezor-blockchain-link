@@ -50,6 +50,7 @@ module.exports = {
     },
     resolve: {
         modules: [SRC, 'node_modules'],
+        extensions: [".ts", '.js'],
         alias: {
             'ws-browser': `${SRC}/utils/ws.ts`,
         },
@@ -59,9 +60,6 @@ module.exports = {
     },
     plugins: [
         new webpack.NormalModuleReplacementPlugin(/^ws$/, 'ws-browser'),
-        // new FlowWebpackPlugin({
-        //     reportingSeverity: 'warning',
-        // }),
         new HtmlWebpackPlugin({
             chunks: ['indexUI'],
             template: `${SRC}ui/index.html`,
