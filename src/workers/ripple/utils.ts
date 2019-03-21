@@ -1,4 +1,4 @@
-/* @flow */
+/* tslint:disable */
 import BigNumber from 'bignumber.js';
 import * as ResponseTypes from '../../types/responses';
 

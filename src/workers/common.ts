@@ -1,20 +1,21 @@
 /* @flow */
 
 import { MESSAGES, RESPONSES } from '../constants';
+import * as IndexTypes from './types/index';
 
 declare function postMessage(data: Response): void;
 
-let _settings: BlockchainSettings;
+let _settings: IndexTypes.BlockchainSettings;
 let _debugPrefix: string;
 let _addresses: string[] = [];
 const _subscription: {[key: string]: boolean} = {};
 
-export const setSettings = (s: BlockchainSettings): void => {
+export const setSettings = (s: IndexTypes.BlockchainSettings): void => {
     _settings = s;
     _debugPrefix = `[Worker "${s.name}"]:`;
 }
 
-export const getSettings = (): BlockchainSettings => {
+export const getSettings = (): IndexTypes.BlockchainSettings => {
     return _settings;
 }
 

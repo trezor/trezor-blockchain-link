@@ -3,18 +3,18 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 import {
     SRC, BUILD, PORT,
-} from 'webpack/constants';
+} from './constants'; 
 
 module.exports = {
     watch: true,
     mode: 'development',
     devtool: 'inline-source-map',
     entry: {
-        indexUI: [`${SRC}/ui/index.ui.ts`],
-        index: [`${SRC}/index.ts`],
+        indexUI: [`${SRC}ui/index.ui`],
+        index: [`${SRC}index`],
     },
     output: {
-        filename: '[name].[hash].ts',
+        filename: '[name].[hash].js',
         path: BUILD,
     },
     devServer: {
@@ -30,15 +30,27 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.js$/,
+                exclude: /(node_modules)/,
+                use: {
+                    loader: 'babel-loader',
+                }
+            },
+            {
                 test: /\.ts?$/,
-                use: 'ts-loader',
-                exclude: /node_modules/
+                use: {
+                    loader: 'awesome-typescript-loader',
+                    options: {
+                        errorsAsWarnings: true
+                    }
+                },
+                exclude: /node_modules/,
             }
         ],
     },
     resolve: {
         modules: [SRC, 'node_modules'],
-        extensions: [ '.tsx', '.ts', '.js' ],
+        extensions: [ '.ts', '.js' ],
         alias: {
             'ws-browser': `${SRC}/utils/ws.ts`,
         },

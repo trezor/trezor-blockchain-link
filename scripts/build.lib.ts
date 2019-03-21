@@ -1,5 +1,5 @@
 import fs from 'fs-extra';
-import { resolve } from 'path';
+import { resolve } from 'path'; 
 import { collectImportsSync } from 'babel-collect-imports';
 import packageJSON from '../package.json';
 

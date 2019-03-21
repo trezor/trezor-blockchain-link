@@ -21,8 +21,13 @@ module.exports = {
         rules: [
             {
                 test: /\.ts?$/,
-                use: 'ts-loader',
-                exclude: /node_modules/
+                use: {
+                    loader: 'awesome-typescript-loader',
+                    options: {
+                        errorsAsWarnings: true
+                    }
+                },
+                exclude: /node_modules/,
             },
             {
                 type: 'javascript/auto',

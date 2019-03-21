@@ -1,9 +1,8 @@
-/* @flow */
+/* tslint:disable */
 
 import EventEmitter from 'events';
-
-import { MESSAGES, RESPONSES } from './constants';
 import { create as createDeferred } from './utils/deferred';
+import { MESSAGES, RESPONSES } from './constants';
 import * as IndexTypes from './types/index';
 import * as ResponseTypes from './types/responses';
 

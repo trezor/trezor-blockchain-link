@@ -1,8 +1,7 @@
-/* @flow */
-
+/* tslint:disable */
 import { RippleAPI } from 'ripple-lib';
 import BigNumber from 'bignumber.js';
-import * as MessageTypes from '../../types/messages';
+import * as MessageTypes from 'types/messages';
 import { MESSAGES, RESPONSES } from '../../constants';
 import * as common from '../common';
 import * as utils from './utils';

@@ -2,15 +2,13 @@
 import 'worker-loader?name=js/blockbook-worker.ts!../workers/blockbook/index';
 import 'worker-loader?name=js/ripple-worker.ts!../workers/ripple/index';
 
-import CONFIG from './config';
+import CONFIG from './config'; 
 import BlockchainLink from '../index';
 
-console.log('CONFIG', CONFIG);
-
-const handleClick = (event: MouseEvent) => {
+const handleClick = (event) => {
     const {target} = event;
     if (target.nodeName.toLowerCase() !== 'button') return;
-    const network: string = getInputValue('network-type');
+    const network = getInputValue('network-type');
 
     // const blockchain: Blockchain<Ripple> = BlockchainLink.get('Ripple Testnet');
     const blockchain = instances.find(b => b.settings.name === network);
@@ -82,26 +80,26 @@ const handleClick = (event: MouseEvent) => {
     }
 }
 
-const handleResponse = (parent: any, response: any) => prepareResponse(parent, response);
+const handleResponse = (parent, response) => prepareResponse(parent, response);
 
-const handleError = (parent: any, error: any) => prepareResponse(parent, error.message, true);
+const handleError = (parent, error) => prepareResponse(parent, error.message, true);
 
-const handleBlockEvent = (blockchain: BlockchainLink, notification: any): void => {
-    const network: string = getInputValue('network-type');
+const handleBlockEvent = (blockchain, notification) => {
+    const network = getInputValue('network-type');
     if (blockchain.settings.name !== network) return;
     const parent = (document.getElementById('notification-block'));
     prepareResponse(parent, notification);
 }
 
-const handleNotificationEvent = (blockchain: BlockchainLink, notification: any) => {
-    const network: string = getInputValue('network-type');
+const handleNotificationEvent = (blockchain, notification) => {
+    const network = getInputValue('network-type');
     if (blockchain.settings.name !== network) return;
 
     const parent = (document.getElementById('notification-address'));
     prepareResponse(parent, notification);
 }
 
-const handleConnectionEvent = (blockchain: BlockchainLink, status: boolean) => {
+const handleConnectionEvent = (blockchain, status) => {
     const parent = (document.getElementById('notification-status'));
     prepareResponse(parent, {
         blockchain: blockchain.settings.name,
@@ -109,12 +107,12 @@ const handleConnectionEvent = (blockchain: BlockchainLink, status: boolean) => {
     }, !status);
 }
 
-const handleErrorEvent = (blockchain: BlockchainLink, message: any) => {
+const handleErrorEvent = (blockchain, message) => {
     const parent = (document.getElementById('notification-status'));
     prepareResponse(parent, message, true);
 }
 
-const prepareResponse = (parent: HTMLElement, response, isError: boolean = false) => {
+const prepareResponse = (parent, response, isError = false) => {
     const div = document.createElement('pre');
     div.className = isError ? 'response error' : 'response';
     const close = document.createElement('div');
@@ -149,12 +147,12 @@ const onClear = () => {
     }
 }
 
-const getInputValue = (id: string): string => {
+const getInputValue = (id) => {
     const {value} = document.getElementById(id);
     return value;
 }
 
-const setInputValue = (id: string, value: string): void => {
+const setInputValue = (id, value) => {
     const element = (document.getElementById(id));
     element.value = value;
 }
@@ -209,7 +207,7 @@ const init = (instances) => {
 
 init(CONFIG);
 
-const instances: BlockchainLink[] = [];
+const instances = [];
 CONFIG.forEach(i => {
     const b = new BlockchainLink(i.blockchain);
     b.on('connected', handleConnectionEvent.bind(this, b, true));
