@@ -23,16 +23,17 @@
     "ws": "./lib/utils/ws.js"
   },
   "scripts": {
-    "dev": "npx webpack-dev-server --config ./webpack/dev.babel.js --mode development",
+    "dev": "npx webpack-dev-server --config ./webpack/dev.babel.js",
     "build": "rm -rf ./build && yarn build:lib && yarn build:workers && babel ./build/lib --out-dir ./build/lib",
-    "build:lib": "babel-node ./scripts/build.lib.js",
-    "build:workers": "babel-node ./scripts/build.workers.js",
-    "lint": "eslint ./src ./webpack",
-    "flow": "flow check ./src",
-    "test": "mocha --opts ./tests/mocha.opts ./tests/index.js"
+    "build:lib": "babel-node ./scripts/build.lib.ts --extensions '.ts'",
+    "build:prod": "rm -rf ./build && webpack --config ./webpack/prod.babel.js --extensions '.ts .js'",
+    "build:workers": "webpack --config ./webpack/workers.babel.js --extensions '.ts .js'",
+    "lint": "eslint . --ext .ts",
+    "test": "mocha --opts ./tests/mocha.opts ./tests/index.ts"
   },
   "devDependencies": {
     "@babel/core": "^7.4.0",
+    "@typescript-eslint/eslint-plugin": "^1.6.0",
     "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
     "babel-collect-imports": "^1.1.0",
@@ -73,12 +74,17 @@
     "ws": "^6.1.2"
   },
   "dependencies": {
+    "@types/html-webpack-plugin": "^3.2.0",
+    "@types/webpack": "^4.4.27",
+    "awesome-typescript-loader": "^5.2.1",
     "babel-plugin-module-resolver": "^3.2.0",
     "bignumber.js": "^8.0.1",
     "es6-promise": "^4.2.5",
     "events": "^3.0.0",
     "ripple-lib": "^1.0.2",
+    "source-map-loader": "^0.2.4",
     "tiny-worker": "^2.1.2",
+    "typescript": "^3.4.1",
     "ws": "^6.1.2"
   }
 }

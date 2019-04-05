@@ -180,7 +180,7 @@ export default class Socket extends EventEmitter {
     }
 
     unsubscribeBlock(): Promise {
-        return new Promise(resolve => {
+        return new Promise(() => {
             if (this._subscribeNewBlockId) {
                 this._unsubscribe('unsubscribeNewBlock', this._subscribeNewBlockId, {}, result => {
                     this._subscribeNewBlockId = '';
@@ -189,8 +189,8 @@ export default class Socket extends EventEmitter {
         });
     }
 
-    subscribeAddresses(addresses: Array<string>): Promise {
-        return new Promise(resolve => {
+    subscribeAddresses(addresses): Promise {
+        return new Promise(() => {
             const method = 'subscribeAddresses';
             const params = {
                 addresses,
@@ -205,7 +205,7 @@ export default class Socket extends EventEmitter {
         });
     }
 
-    unsubscribeAddresses(addresses: Array<string>): Promise {
+    unsubscribeAddresses(addresses): Promise {
         return new Promise(resolve => {
             if (this._subscribeAddressesId) {
                 this._unsubscribe(
@@ -220,7 +220,7 @@ export default class Socket extends EventEmitter {
         });
     }
 
-    getAccountInfo(payload: any): Promise {
+    getAccountInfo(payload): Promise {
         return new Promise(resolve => {
             this._send('getAccountInfo', payload, response => {
                 resolve(response);
@@ -228,7 +228,7 @@ export default class Socket extends EventEmitter {
         });
     }
 
-    estimateFee(options: any): Promise {
+    estimateFee(options): Promise {
         return new Promise(resolve => {
             this._send(
                 'estimateFee',
@@ -243,7 +243,7 @@ export default class Socket extends EventEmitter {
         });
     }
 
-    pushTransaction(hex: string): Promise {
+    pushTransaction(hex): Promise {
         return new Promise(resolve => {
             this._send('sendTransaction', { hex }, response => {
                 resolve(response);

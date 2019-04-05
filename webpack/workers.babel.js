@@ -1,13 +1,10 @@
 import { SRC, BUILD } from './constants';
 
-// import webpack from 'webpack';
-// import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
-
 module.exports = {
     mode: 'production',
     entry: {
-        'ripple-worker': `${SRC}workers/ripple/index.js`,
-        'blockbook-worker': `${SRC}workers/blockbook/index.js`,
+        'ripple-worker': `${SRC}workers/ripple/index.ts`,
+        'blockbook-worker': `${SRC}workers/blockbook/index.ts`,
     },
     output: {
         filename: '[name].js',

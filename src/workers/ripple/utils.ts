@@ -2,12 +2,10 @@
 
 import BigNumber from 'bignumber.js';
 
-import type { Transaction } from 'types/responses';
-
 export const concatTransactions = (
-    txs: Array<Transaction>,
-    newTxs: Array<Transaction>
-): Array<Transaction> => {
+    txs,
+    newTxs
+) => {
     if (newTxs.length < 1) return txs;
     const unique = newTxs.filter(tx => txs.indexOf(tx) < 0);
     return txs.concat(unique);
@@ -44,7 +42,7 @@ export const transformTransactionHistory = (descriptor, raw) => {
     };
 };
 
-export const transformTransactionEvent = (descriptor: string, event: any): Transaction => {
+export const transformTransactionEvent = (descriptor, event) => {
     const tx = event.transaction;
     const isPayment = tx.TransactionType === 'Payment';
     const type = tx.Account === descriptor ? 'send' : 'recv';

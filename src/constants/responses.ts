@@ -1,5 +1,3 @@
-/* @flow */
-
 // promise responses
 export const ERROR: 'r_error' = 'r_error'; // exception: this could be also emitted as event (with id: -1)
 export const CONNECT: 'r_connect' = 'r_connect';

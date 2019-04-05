@@ -1,5 +1,3 @@
-/* @flow */
-
 // Preload workers in webpack, force webpack to compile them
 // $FlowIssue loader notation
 import BlockbookWorker from 'worker-loader?name=js/blockbook-worker.js!../workers/blockbook/index.js'; // eslint-disable-line no-unused-vars
@@ -9,10 +7,10 @@ import RippleWorker from 'worker-loader?name=js/ripple-worker.js!../workers/ripp
 import CONFIG from './config';
 import BlockchainLink from 'index';
 
-const handleClick = (event: MouseEvent) => {
-    const target: HTMLElement = (event.target: any);
+const handleClick = (event) => {
+    const target = (event.target);
     if (target.nodeName.toLowerCase() !== 'button') return;
-    const network: string = getInputValue('network-type');
+    const network = getInputValue('network-type');
 
     // const blockchain: Blockchain<Ripple> = BlockchainLink.get('Ripple Testnet');
     const blockchain = instances.find(b => b.settings.name === network);
@@ -84,39 +82,39 @@ const handleClick = (event: MouseEvent) => {
     }
 };
 
-const handleResponse = (parent: any, response: any) => prepareResponse(parent, response);
+const handleResponse = (parent, response) => prepareResponse(parent, response);
 
-const handleError = (parent: any, error: any) => prepareResponse(parent, error.message, true);
+const handleError = (parent, error) => prepareResponse(parent, error.message, true);
 
-const handleBlockEvent = (blockchain: BlockchainLink, notification: any): void => {
-    const network: string = getInputValue('network-type');
+const handleBlockEvent = (blockchain: BlockchainLink, notification) => {
+    const network = getInputValue('network-type');
     if (blockchain.settings.name !== network) return;
-    const parent = (document.getElementById('notification-block'): any);
+    const parent = (document.getElementById('notification-block'));
     prepareResponse(parent, notification);
 };
 
-const handleNotificationEvent = (blockchain: BlockchainLink, notification: any) => {
-    const network: string = getInputValue('network-type');
+const handleNotificationEvent = (blockchain, notification) => {
+    const network = getInputValue('network-type');
     if (blockchain.settings.name !== network) return;
 
-    const parent = (document.getElementById('notification-address'): any);
+    const parent = (document.getElementById('notification-address'));
     prepareResponse(parent, notification);
 };
 
-const handleConnectionEvent = (blockchain: BlockchainLink, status: boolean) => {
-    const parent = (document.getElementById('notification-status'): any);
+const handleConnectionEvent = (blockchain, status: boolean) => {
+    const parent = (document.getElementById('notification-status'));
     prepareResponse(parent, {
         blockchain: blockchain.settings.name,
         connected: status,
     }, !status);
 };
 
-const handleErrorEvent = (blockchain: BlockchainLink, message: any) => {
-    const parent = (document.getElementById('notification-status'): any);
+const handleErrorEvent = (blockchain, message) => {
+    const parent = (document.getElementById('notification-status'));
     prepareResponse(parent, message, true);
 };
 
-const prepareResponse = (parent: HTMLElement, response, isError: boolean = false) => {
+const prepareResponse = (parent, response, isError) => {
     const div = document.createElement('pre');
     div.className = isError ? 'response error' : 'response';
     const close = document.createElement('div');
@@ -151,13 +149,13 @@ const onClear = () => {
     }
 };
 
-const getInputValue = (id: string): string => {
-    const value: string = (document.getElementById(id): any).value;
+const getInputValue = (id) => {
+    const value = (document.getElementById(id)).value;
     return value;
 };
 
-const setInputValue = (id: string, value: string): void => {
-    const element = (document.getElementById(id): any);
+const setInputValue = (id, value) => {
+    const element = (document.getElementById(id));
     element.value = value;
 };
 
@@ -169,12 +167,12 @@ const onSelectChange = (event) => {
 };
 
 const onAccountInfoModeChange = (event) => {
-    const advanced = (document.getElementById('get-account-info-advanced'): any);
+    const advanced = (document.getElementById('get-account-info-advanced'));
     advanced.style.display = event.target.value === 'advanced' ? 'block' : 'none';
 };
 
 const onEstimateFeeModeChange = (event) => {
-    const advanced = (document.getElementById('estimate-fee-advanced'): any);
+    const advanced = (document.getElementById('estimate-fee-advanced'));
     advanced.style.display = event.target.value === 'advanced' ? 'block' : 'none';
 };
 
@@ -186,8 +184,8 @@ const fillValues = (data) => {
     setInputValue('subscribe-addresses', data.subscribe);
 };
 
-const init = (instances: Array<any>) => {
-    const select = (document.getElementById('network-type'): any);
+const init = (instances) => {
+    const select = (document.getElementById('network-type'));
     select.innerHTML = instances.map((i) => {
         const b = i.blockchain;
         if (i.selected) {
@@ -198,19 +196,19 @@ const init = (instances: Array<any>) => {
     });
     select.onchange = onSelectChange;
 
-    const clear = (document.getElementById('clear'): any);
+    const clear = (document.getElementById('clear'));
     clear.onclick = onClear;
 
-    const accountInfoMode = (document.getElementById('get-account-info-mode'): any);
+    const accountInfoMode = (document.getElementById('get-account-info-mode'));
     accountInfoMode.onchange = onAccountInfoModeChange;
 
-    const estimateFeeMode = (document.getElementById('estimate-fee-mode'): any);
+    const estimateFeeMode = (document.getElementById('estimate-fee-mode'));
     estimateFeeMode.onchange = onEstimateFeeModeChange;
 };
 
 init(CONFIG);
 
-const instances: Array<BlockchainLink> = [];
+const instances = [];
 CONFIG.forEach((i) => {
     const b = new BlockchainLink(i.blockchain);
     b.on('connected', handleConnectionEvent.bind(this, b, true));

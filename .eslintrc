@@ -1,13 +1,12 @@
 {
+    "parser": "@typescript-eslint/parser",
     "extends": [
         "airbnb-base",
+        "plugin:@typescript-eslint/recommended",
         "prettier",
         "prettier/babel",
-        "plugin:flowtype/recommended",
-        "prettier/flowtype"
+        "prettier/@typescript-eslint"
     ],
-    "globals": {
-    },
     "env": {
         "browser": true,
         "amd": true,
@@ -30,21 +29,18 @@
         "max-len": 0,
         "eol-last": 0,
         "spaced-comment": 0,
-        "prettier/prettier": "error"
+        "prettier/prettier": "error",
+        "@typescript-eslint/rule-name": "error"
     },
     "plugins": [
+        "@typescript-eslint",
         "import",
         "prettier",
         "flowtype",
         "mocha"
     ],
-    "settings": {
-        "import/resolver": {
-            "babel-module": {}
-        }
-    },
     "parserOptions": {
-        "ecmaVersion": 7,
+        "ecmaVersion": 2018,
         "sourceType": "module"
     }
 }

@@ -1,23 +1,20 @@
-/* @flow */
-
-import type { Response, BlockchainSettings } from '../types';
 import { MESSAGES, RESPONSES } from '../constants';
 
-declare function postMessage(data: Response): void;
+declare function postMessage(data): void;
 
-let _settings: BlockchainSettings;
+let _settings;
 let _debugPrefix: string;
 let _addresses: Array<string> = [];
 const _subscription: { [key: string]: boolean } = {};
 
-export const setSettings = (s: BlockchainSettings): void => {
+export const setSettings = (s): void => {
     _settings = s;
     _debugPrefix = `[Worker "${s.name}"]:`;
 };
 
-export const getSettings = (): BlockchainSettings => _settings;
+export const getSettings = () => _settings;
 
-export const debug = (...args: Array<any>): void => {
+export const debug = (...args) => {
     if (_settings && _settings.debug) {
         if (args[0] === 'warn' || args[0] === 'error') {
             console[args[0]](_debugPrefix, ...args.slice(1));
@@ -34,7 +31,7 @@ export const handshake = (): void => {
     });
 };
 
-export const errorHandler = ({ id, error }: { id: number, error: Object }): void => {
+export const errorHandler = ({ id, error }: { id, error }): void => {
     let message: string = '';
     if (typeof error === 'string') {
         message = error;
@@ -54,11 +51,11 @@ export const errorHandler = ({ id, error }: { id: number, error: Object }): void
     });
 };
 
-export const response = (data: Response): void => {
+export const response = (data): void => {
     postMessage(data);
 };
 
-const getUniqueInput = (addresses: Array<string>): Array<string> => {
+const getUniqueInput = (addresses) => {
     if (!Array.isArray(addresses)) return [];
     const seen = {};
     return addresses.filter(a => {

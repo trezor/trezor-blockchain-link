@@ -17,8 +17,8 @@ const buildWorker = (entry) => {
 };
 
 const workers = [
-    '../src/workers/ripple/index.js',
-    '../src/workers/blockbook/index.js',
+    '../src/workers/ripple/index.ts',
+    '../src/workers/blockbook/index.ts',
 ];
 
 workers.forEach(w => {

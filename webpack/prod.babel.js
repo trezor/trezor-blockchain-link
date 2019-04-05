@@ -1,31 +1,21 @@
 import webpack from 'webpack';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import { SRC, BUILD, PORT } from './constants';
+import { SRC, BUILD } from './constants';
 
 module.exports = {
-    watch: true,
-    mode: 'development',
+    mode: 'production',
     devtool: 'source-map',
     entry: {
-        indexUI: [`${SRC}/ui/index.ui.ts`],
         index: [`${SRC}/index.ts`],
     },
     output: {
-        filename: '[name].[hash].js',
+        filename: '[name].js',
+        sourceMapFilename: '[name].js.map',
         path: BUILD,
-    },
-    devServer: {
-        contentBase: [SRC],
-        hot: false,
-        https: false,
-        port: PORT,
-        stats: 'verbose',
-        inline: true,
     },
     module: {
         rules: [
             {
-                test: /\.ts?$/,
+                test: /\.tsx?$/,
                 loader: 'awesome-typescript-loader',
                 options: {
                     errorsAsWarnings: true,
@@ -45,15 +35,8 @@ module.exports = {
     },
     plugins: [
         new webpack.NormalModuleReplacementPlugin(/^ws$/, 'ws-browser'),
-        new HtmlWebpackPlugin({
-            chunks: ['indexUI'],
-            template: `${SRC}ui/index.html`,
-            filename: 'index.html',
-            inject: true,
-        }),
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.NoEmitOnErrorsPlugin(),
-        // new webpack.HotModuleReplacementPlugin(),
         new webpack.NamedModulesPlugin(),
     ],
     node: {

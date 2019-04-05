@@ -4,13 +4,8 @@ import { RippleAPI } from 'ripple-lib';
 import BigNumber from 'bignumber.js';
 import { MESSAGES, RESPONSES } from '../../constants';
 
-import * as MessageTypes from '../../types/messages';
-import * as ResponseTypes from '../../types/responses';
-import type { Message } from '../../types';
 import * as utils from './utils';
 import * as common from '../common';
-
-declare function onmessage(event: { data: Message }): void;
 
 // WebWorker message handling
 onmessage = event => {
@@ -212,7 +207,7 @@ const getMempoolAccountInfo = async (
 const getRawTransactionsData = async (
     account: string,
     options
-): Promise<Array<ResponseTypes.Transaction>> => {
+) => {
     const api = await connect();
     return await api.request('account_tx', {
         account,
@@ -222,10 +217,10 @@ const getRawTransactionsData = async (
     });
 };
 
-const getAccountInfo = async (data: MessageTypes.GetAccountInfoOptions): Promise<void> => {
+const getAccountInfo = async (data) => {
     const { payload } = data;
 
-    const options: MessageTypes.GetAccountInfoOptions = payload || {};
+    const options = payload || {};
 
     const account = {
         address: payload.descriptor,
@@ -323,7 +318,7 @@ const getAccountInfo = async (data: MessageTypes.GetAccountInfoOptions): Promise
     }
 };
 
-const estimateFee = async (data: { id: number } & MessageTypes.EstimateFee): Promise<void> => {
+const estimateFee = async (data) => {
     try {
         const api = await connect();
         const fee = await api.getFee();
@@ -344,9 +339,7 @@ const estimateFee = async (data: { id: number } & MessageTypes.EstimateFee): Pro
     }
 };
 
-const pushTransaction = async (
-    data: { id: number } & MessageTypes.PushTransaction
-): Promise<void> => {
+const pushTransaction = async (data) => {
     try {
         const api = await connect();
         // tx_blob hex must be in upper case
@@ -367,7 +360,7 @@ const pushTransaction = async (
     }
 };
 
-const subscribe = async (data: { id: number } & MessageTypes.Subscribe): Promise<void> => {
+const subscribe = async (data) => {
     const { payload } = data;
     try {
         if (payload.type === 'notification') {
@@ -387,7 +380,7 @@ const subscribe = async (data: { id: number } & MessageTypes.Subscribe): Promise
     });
 };
 
-const subscribeAddresses = async (addresses: Array<string>, mempool: boolean = true) => {
+const subscribeAddresses = async (addresses, mempool) => {
     // subscribe to new blocks, confirmed and mempool transactions for given addresses
     const api = await connect();
     if (!common.getSubscription('transaction')) {
@@ -415,7 +408,7 @@ const subscribeBlock = async () => {
     common.addSubscription('ledger');
 };
 
-const unsubscribe = async (data: { id: number } & MessageTypes.Subscribe): Promise<void> => {
+const unsubscribe = async (data) => {
     const { payload } = data;
     try {
         if (payload.type === 'notification') {
@@ -435,7 +428,7 @@ const unsubscribe = async (data: { id: number } & MessageTypes.Subscribe): Promi
     });
 };
 
-const unsubscribeAddresses = async (addresses: Array<string>) => {
+const unsubscribeAddresses = async (addresses) => {
     const subscribed = common.removeAddresses(addresses);
     const request = {
         // stream: ['transactions', 'transactions_proposed'],
@@ -461,7 +454,7 @@ const unsubscribeBlock = async () => {
     common.removeSubscription('ledger');
 };
 
-const disconnect = async (data: { id: number }) => {
+const disconnect = async (data) => {
     if (!_api) {
         common.response({ id: data.id, type: RESPONSES.DISCONNECTED, payload: true });
         return;
@@ -474,7 +467,7 @@ const disconnect = async (data: { id: number }) => {
     }
 };
 
-const onNewBlock = (event: any) => {
+const onNewBlock = (event) => {
     common.response({
         id: -1,
         type: RESPONSES.NOTIFICATION,
@@ -488,7 +481,7 @@ const onNewBlock = (event: any) => {
     });
 };
 
-const onTransaction = (event: any) => {
+const onTransaction = (event) => {
     if (event.type !== 'transaction') return;
 
     const subscribed = common.getAddresses();

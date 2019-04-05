@@ -2,12 +2,7 @@
 import { MESSAGES, RESPONSES } from '../../constants';
 import Connection from './websocket';
 
-import type { Message, Response } from '../../types';
-import * as MessageTypes from '../../types/messages';
 import * as common from '../common';
-
-declare function postMessage(data: Response): void;
-declare function onmessage(event: { data: Message }): void;
 
 onmessage = event => {
     if (!event.data) return;
@@ -55,10 +50,10 @@ onmessage = event => {
     }
 };
 
-let _connection: ?Connection;
-let _endpoints: Array<string> = [];
+let _connection;
+let _endpoints = [];
 
-const connect = async (): Promise<Connection> => {
+const connect = async () => {
     if (_connection) {
         if (_connection.isConnected()) return _connection;
     }
@@ -112,7 +107,7 @@ const cleanup = () => {
     common.clearSubscriptions();
 };
 
-const getInfo = async (data: { id: number } & MessageTypes.GetInfo): Promise<void> => {
+const getInfo = async (data) => {
     try {
         const socket = await connect();
         const info = await socket.getServerInfo();
@@ -127,7 +122,7 @@ const getInfo = async (data: { id: number } & MessageTypes.GetInfo): Promise<voi
     }
 };
 
-const estimateFee = async (data: { id: number } & MessageTypes.EstimateFee): Promise<void> => {
+const estimateFee = async (data) => {
     try {
         const socket = await connect();
         const resp = await socket.estimateFee(data);
@@ -142,9 +137,7 @@ const estimateFee = async (data: { id: number } & MessageTypes.EstimateFee): Pro
     }
 };
 
-const pushTransaction = async (
-    data: { id: number } & MessageTypes.PushTransaction
-): Promise<void> => {
+const pushTransaction = async (data) => {
     try {
         const socket = await connect();
         const resp = await socket.pushTransaction(data.payload);
@@ -159,13 +152,10 @@ const pushTransaction = async (
     }
 };
 
-const getAccountInfo = async (
-    data: { id: number } & MessageTypes.getAccountInfo
-): Promise<void> => {
+const getAccountInfo = async (data) => {
     const { payload } = data;
     try {
         const socket = await connect();
-        console.log('payload', payload);
         const info = await socket.getAccountInfo(payload);
         common.response({
             id: data.id,
@@ -177,7 +167,7 @@ const getAccountInfo = async (
     }
 };
 
-const subscribe = async (data: { id: number } & MessageTypes.Subscribe): Promise<void> => {
+const subscribe = async (data) => {
     const { payload } = data;
     try {
         if (payload.type === 'notification') {
@@ -197,7 +187,7 @@ const subscribe = async (data: { id: number } & MessageTypes.Subscribe): Promise
     });
 };
 
-const subscribeAddresses = async (addresses: Array<string>) => {
+const subscribeAddresses = async (addresses) => {
     // subscribe to new blocks, confirmed and mempool transactions for given addresses
     const socket = await connect();
     if (!common.getSubscription('notification')) {
@@ -219,7 +209,7 @@ const subscribeBlock = async () => {
     await socket.subscribeBlock();
 };
 
-const unsubscribe = async (data: { id: number } & MessageTypes.Subscribe): Promise<void> => {
+const unsubscribe = async (data) => {
     const { payload } = data;
     try {
         if (payload.type === 'notification') {
@@ -239,7 +229,7 @@ const unsubscribe = async (data: { id: number } & MessageTypes.Subscribe): Promi
     });
 };
 
-const unsubscribeAddresses = async (addresses: Array<string>) => {
+const unsubscribeAddresses = async (addresses) => {
     const subscribed = common.removeAddresses(addresses);
     const socket = await connect();
     await socket.unsubscribeAddresses(addresses);
@@ -260,7 +250,7 @@ const unsubscribeBlock = async () => {
     await socket.unsubscribeBlock();
 };
 
-const disconnect = async (data: { id: number }) => {
+const disconnect = async (data) => {
     if (!_connection) {
         common.response({ id: data.id, type: RESPONSES.DISCONNECTED, payload: true });
         return;
@@ -273,7 +263,7 @@ const disconnect = async (data: { id: number }) => {
     }
 };
 
-const onNewBlock = (data: any) => {
+const onNewBlock = (data) => {
     common.response({
         id: -1,
         type: RESPONSES.NOTIFICATION,
@@ -284,7 +274,7 @@ const onNewBlock = (data: any) => {
     });
 };
 
-const onTransaction = (event: any) => {
+const onTransaction = (event) => {
     common.response({
         id: -1,
         type: RESPONSES.NOTIFICATION,
